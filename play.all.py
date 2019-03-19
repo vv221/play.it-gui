@@ -24,8 +24,10 @@ api = "http://api.dotslashplay.it/"
 img = "https://img.dotslashplay.it/"
 www = "https://wiki.dotslashplay.it/"
 
-# Adding localisation for game pages on the wiki.
-www += locale.getlocale()[0].partition("_")[0]+"/"
+try:  # Adding localisation for game pages on the wiki.
+    www += locale.getlocale()[0].partition("_")[0]+"/"
+except AttributeError:  # getlocale() gets None…
+    www += "en/"  # Let's use the default…
 
 # Thumbnails directory.
 if "XDG_CACHE_HOME" in os.environ:
