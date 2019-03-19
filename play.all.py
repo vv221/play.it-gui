@@ -343,7 +343,7 @@ def download(term, status):
                getdeps(dependencies), [], flags, None, None)
 
 def getfile(url, filename):
-    if url.startswith("http"):
+    if url.startswith("http") and not url.endswith(".torrent"):
         if launchable("wget"):
             return "wget", url
         if launchable("curl"):
