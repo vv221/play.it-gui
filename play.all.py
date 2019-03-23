@@ -314,11 +314,9 @@ def download(term, status):
     while it is not None:
         archive = os.path.join(folder.get_text(), files.get_value(it, 1))
         if not os.path.exists(archive):
-            if status != 0:  # It failed…
-                files.get_value(it, 6).pop(0)
             if len(files.get_value(it, 6)) > 0:
-                url = files.get_value(it, 6)[0]
-                name = files.get_value(it, 1)[0]
+                name = files.get_value(it, 1)
+                url = files.get_value(it, 6).pop(0)
                 term.spawn_sync(vte.PtyFlags.DEFAULT, folder.get_text(),
                               getfile(url, name), [], flags, None, None)
                 return  # We will come back with the file.
