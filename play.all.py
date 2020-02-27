@@ -104,7 +104,7 @@ stack.add_named(box, "list")
 @listen(window, "show")
 def searching(*args):
     games.clear()
-    url = api+"/games/search?search="+search.get_text()
+    url = api+"/games/search?search="+urllib.parse.quote(search.get_text())
     if url.endswith("="):  # There's no game here.
         url = api+"/games/list"  # Let's list all.
     url += "&" if "?" in url else "?"
