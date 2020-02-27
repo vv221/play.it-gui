@@ -108,11 +108,16 @@ def searching(*args):
     if url.endswith("="):  # There's no game here.
         url = api+"/games/list"  # Let's list all.
     url += "&" if "?" in url else "?"
-    url += "properties=game_name,game_id,id,images.thumbnail"
+    url += "properties=game_name,game_id,id,images.thumbnail,images.banner"
     with urllib.request.urlopen(url) as f:
         for game in json.loads(f.read()):
+            if game["images"]["banner"]["small"] is None:
+                # falls back on thumbnail if banner is not provided
+                image = game["images"]["thumbnail"]
+            else:
+                image = game["images"]["banner"]["small"]
             games.append([ loading, game["game_name"], game["id"],
-                           game["game_id"], game["images"]["thumbnail"] ])
+                           game["game_id"], image ])
 
 @listen(search, "icon-press")
 def searchicon(search, pos, event):
