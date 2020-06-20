@@ -111,9 +111,10 @@ def searching(*args):
     url += "properties=game_name,game_id,id,images.thumbnail,images.banner"
     with urllib.request.urlopen(url) as f:
         for g in json.loads(f.read()):
-            i = g["images"]["banner"]["small"]
-            if i is None:  # There's no available banner for this game,
-                i = g["images"]["thumbnail"]  # so using the thumbnail instead.
+            if g["images"]["banner"] is None:
+                i = g["images"]["screenshots"][0]
+            else:  # Let's use the small banner.
+                i = g["images"]["banner"]["small"]
             games.append([ loading, g["game_name"], g["id"], g["game_id"], i ])
 
 @listen(search, "icon-press")
