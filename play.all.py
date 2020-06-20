@@ -112,7 +112,10 @@ def searching(*args):
     with urllib.request.urlopen(url) as f:
         for g in json.loads(f.read()):
             if g["images"]["banner"] is None:
-                i = g["images"]["screenshots"][0]
+                if len(g["images"]["screenshots"]) > 0:
+                    i = g["images"]["screenshots"][0]
+                else:  # Well…
+                    i = None
             else:  # Let's use the small banner.
                 i = g["images"]["banner"]["small"]
             games.append([ loading, g["game_name"], g["id"], g["game_id"], i ])
